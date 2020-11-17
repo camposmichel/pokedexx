@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedexx/app/modules/list/widgets/pokecard/pokecard_widget.dart';
 import 'list_controller.dart';
@@ -28,11 +29,13 @@ class _ListPageState extends ModularState<ListPage, ListController> {
           child: pokemonImage,
         ),
       ),
-      body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (_, index) {
-            return PokecardWidget();
-          }),
+      body: Observer(builder: (_) {
+        return ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return PokecardWidget();
+            });
+      }),
     );
   }
 }

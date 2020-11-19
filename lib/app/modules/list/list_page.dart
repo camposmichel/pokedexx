@@ -30,10 +30,28 @@ class _ListPageState extends ModularState<ListPage, ListController> {
         ),
       ),
       body: Observer(builder: (_) {
+        if (controller.pokemons.error != null) {
+          return Center(
+            child: Text('Error'),
+          );
+        }
+
+        if (controller.pokemons.value == null) {
+          return Center(
+            child: CircularProgressIndicator(
+              semanticsLabel: 'Carregando',
+            ),
+          );
+        }
+
+        var pokemons = controller.pokemons.value;
+
         return ListView.builder(
-            itemCount: 10,
+            itemCount: pokemons.length,
             itemBuilder: (context, index) {
-              return PokecardWidget();
+              return PokecardWidget(
+                name: pokemons[index].name,
+              );
             });
       }),
     );

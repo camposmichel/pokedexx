@@ -7,7 +7,7 @@ part of 'pokemon_repository.dart';
 // **************************************************************************
 
 final $PokemonRepository = BindInject(
-  (i) => PokemonRepository(i<DioForNative>()),
+  (i) => PokemonRepository(i<Dio>()),
   singleton: true,
   lazy: true,
 );

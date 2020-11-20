@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedexx/app/modules/list/widgets/pokecard/pokecard_widget.dart';
+import 'package:pokedexx/app/utils/utils.dart';
 import 'list_controller.dart';
 
 class ListPage extends StatefulWidget {
@@ -13,7 +14,8 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends ModularState<ListPage, ListController> {
-  //use 'controller' variable to access controller
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+
   final pokemonImage = new Image(
       image: new AssetImage('lib/assets/pokemon.png'), fit: BoxFit.cover);
 
@@ -26,6 +28,7 @@ class _ListPageState extends ModularState<ListPage, ListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         brightness: Brightness.dark,
@@ -34,6 +37,18 @@ class _ListPageState extends ModularState<ListPage, ListController> {
           padding: EdgeInsets.all(100.0),
           child: pokemonImage,
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
+            tooltip: 'Busca de pokemons',
+            onPressed: () {
+              showSnackBar(_scaffoldKey, 'Em desenvolvimento!');
+            },
+          ),
+        ],
       ),
       body: Observer(builder: (_) {
         final pokemons = controller.pokemonStore.pokemons;

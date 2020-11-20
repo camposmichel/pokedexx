@@ -24,7 +24,6 @@ class _NavigationPageState
         controller: controller.pageViewController,
         children: [
           RouterOutlet(module: ListModule()),
-          RouterOutlet(module: SearchModule()),
           RouterOutlet(module: InfoModule()),
         ],
       ),
@@ -36,8 +35,6 @@ class _NavigationPageState
               selectedItemColor: Colors.white,
               items: [
                 BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Lista'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.search), label: 'Busca'),
                 BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Info'),
               ],
               currentIndex: controller.pageViewController?.page?.round() ?? 0,

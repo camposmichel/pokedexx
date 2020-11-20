@@ -19,21 +19,6 @@ final $PokemonStore = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PokemonStore on _PokemonStoreBase, Store {
-  final _$loadingAtom = Atom(name: '_PokemonStoreBase.loading');
-
-  @override
-  bool get loading {
-    _$loadingAtom.reportRead();
-    return super.loading;
-  }
-
-  @override
-  set loading(bool value) {
-    _$loadingAtom.reportWrite(value, super.loading, () {
-      super.loading = value;
-    });
-  }
-
   final _$pokemonsAtom = Atom(name: '_PokemonStoreBase.pokemons');
 
   @override
@@ -46,6 +31,21 @@ mixin _$PokemonStore on _PokemonStoreBase, Store {
   set pokemons(List<PokemonModel> value) {
     _$pokemonsAtom.reportWrite(value, super.pokemons, () {
       super.pokemons = value;
+    });
+  }
+
+  final _$pokemonDetailsAtom = Atom(name: '_PokemonStoreBase.pokemonDetails');
+
+  @override
+  ObservableFuture<PokemonDetailsModel> get pokemonDetails {
+    _$pokemonDetailsAtom.reportRead();
+    return super.pokemonDetails;
+  }
+
+  @override
+  set pokemonDetails(ObservableFuture<PokemonDetailsModel> value) {
+    _$pokemonDetailsAtom.reportWrite(value, super.pokemonDetails, () {
+      super.pokemonDetails = value;
     });
   }
 
@@ -64,10 +64,21 @@ mixin _$PokemonStore on _PokemonStoreBase, Store {
   }
 
   @override
+  void fetchPokemonDetails(String id) {
+    final _$actionInfo = _$_PokemonStoreBaseActionController.startAction(
+        name: '_PokemonStoreBase.fetchPokemonDetails');
+    try {
+      return super.fetchPokemonDetails(id);
+    } finally {
+      _$_PokemonStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-loading: ${loading},
-pokemons: ${pokemons}
+pokemons: ${pokemons},
+pokemonDetails: ${pokemonDetails}
     ''';
   }
 }

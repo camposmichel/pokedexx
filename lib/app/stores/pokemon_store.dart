@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:pokedexx/app/models/pokemon_details_model.dart';
 import 'package:pokedexx/app/models/pokemon_model.dart';
 import 'package:pokedexx/app/repositories/pokemon_repository.dart';
 
@@ -12,10 +13,10 @@ abstract class _PokemonStoreBase with Store {
   final PokemonRepository repository;
 
   @observable
-  bool loading = false;
+  List<PokemonModel> pokemons;
 
   @observable
-  List<PokemonModel> pokemons;
+  ObservableFuture<PokemonDetailsModel> pokemonDetails;
 
   String next;
 
@@ -25,7 +26,6 @@ abstract class _PokemonStoreBase with Store {
 
   @action
   void fetchPokemons() {
-    loading = true;
     repository.getPokemons(params: next ?? '').then((value) {
       next = value.next;
 
@@ -34,8 +34,11 @@ abstract class _PokemonStoreBase with Store {
       } else {
         pokemons = [...pokemons, ...value.pokemons];
       }
-
-      loading = false;
     });
+  }
+
+  @action
+  void fetchPokemonDetails(String id) {
+    pokemonDetails = repository.getPokemonDetails(id: id).asObservable();
   }
 }

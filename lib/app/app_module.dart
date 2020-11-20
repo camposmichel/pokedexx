@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'modules/details/details_module.dart';
 import 'repositories/pokemon_repository.dart';
 import 'stores/pokemon_store.dart';
 import 'package:pokedexx/app/modules/navigation/navigation_module.dart';
@@ -21,6 +22,7 @@ class AppModule extends MainModule {
   @override
   List<ModularRouter> get routers => [
         ModularRouter(Modular.initialRoute, module: NavigationModule()),
+        ModularRouter('/details', module: DetailsModule()),
       ];
 
   @override

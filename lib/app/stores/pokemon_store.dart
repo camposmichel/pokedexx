@@ -12,7 +12,12 @@ abstract class _PokemonStoreBase with Store {
   final PokemonRepository repository;
 
   @observable
-  ObservableFuture<List<PokemonModel>> pokemons;
+  bool loading = false;
+
+  @observable
+  List<PokemonModel> pokemons;
+
+  String next;
 
   _PokemonStoreBase(this.repository) {
     fetchPokemons();
@@ -20,6 +25,17 @@ abstract class _PokemonStoreBase with Store {
 
   @action
   void fetchPokemons() {
-    pokemons = this.repository.getList().asObservable();
+    loading = true;
+    repository.getPokemons(params: next ?? '').then((value) {
+      next = value.next;
+
+      if (pokemons == null) {
+        pokemons = value.pokemons;
+      } else {
+        pokemons = [...pokemons, ...value.pokemons];
+      }
+
+      loading = false;
+    });
   }
 }

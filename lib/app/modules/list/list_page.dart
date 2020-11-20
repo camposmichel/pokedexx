@@ -18,6 +18,12 @@ class _ListPageState extends ModularState<ListPage, ListController> {
       image: new AssetImage('lib/assets/pokemon.png'), fit: BoxFit.cover);
 
   @override
+  void initState() {
+    super.initState();
+    controller.buildScrollListener();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -30,13 +36,10 @@ class _ListPageState extends ModularState<ListPage, ListController> {
         ),
       ),
       body: Observer(builder: (_) {
-        if (controller.pokemons.error != null) {
-          return Center(
-            child: Text('Error'),
-          );
-        }
+        final pokemons = controller.pokemonStore.pokemons;
 
-        if (controller.pokemons.value == null) {
+        // TODO: Repensar loading
+        if (pokemons == null) {
           return Center(
             child: CircularProgressIndicator(
               semanticsLabel: 'Carregando',
@@ -44,13 +47,12 @@ class _ListPageState extends ModularState<ListPage, ListController> {
           );
         }
 
-        var pokemons = controller.pokemons.value;
-
         return ListView.builder(
+            controller: controller.scrollController,
             itemCount: pokemons.length,
             itemBuilder: (context, index) {
               return PokecardWidget(
-                name: pokemons[index].name,
+                pokemon: pokemons[index],
               );
             });
       }),

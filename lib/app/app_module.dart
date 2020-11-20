@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'repositories/pokemon_repository.dart';
+import 'stores/pokemon_store.dart';
 import 'package:pokedexx/app/modules/navigation/navigation_module.dart';
 import 'app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,6 +13,7 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
+        Bind((i) => PokemonStore(i.get())),
         Bind((i) => PokemonRepository(i.get())),
         Bind((i) => Dio(BaseOptions(baseUrl: URL_BASE))),
       ];

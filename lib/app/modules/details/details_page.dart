@@ -51,11 +51,18 @@ class _DetailsPageState extends ModularState<DetailsPage, DetailsController> {
           return Center(
             child: Column(
               children: [
-                FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: '$URL_IMAGE_BASE/${details.id}.png',
-                  imageScale: 1.5,
-                  fit: BoxFit.contain,
+                Image.network(
+                  '$URL_IMAGE_BASE/${details.id}.png',
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+
+                    return Center(
+                      child: CircularProgressIndicator(
+                        semanticsLabel: 'Carregando',
+                      ),
+                    );
+                  },
                 ),
                 Text(
                   details.name,

@@ -19,7 +19,7 @@ class PokemonRepository extends Disposable {
     return PokemonResponse.fromJson(response.data);
   }
 
-  Future<PokemonDetailsModel> getPokemonDetails({String id}) async {
+  Future<PokemonDetailsModel> getPokemonDetails(String id) async {
     final Response response = await _dio.get('/pokemon/$id');
     return PokemonDetailsModel.fromJson(response.data);
   }

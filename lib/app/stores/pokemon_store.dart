@@ -39,6 +39,6 @@ abstract class _PokemonStoreBase with Store {
 
   @action
   void fetchPokemonDetails(String id) {
-    pokemonDetails = repository.getPokemonDetails(id: id).asObservable();
+    pokemonDetails = repository.getPokemonDetails(id).asObservable();
   }
 }

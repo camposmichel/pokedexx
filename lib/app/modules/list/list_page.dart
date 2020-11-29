@@ -62,14 +62,17 @@ class _ListPageState extends ModularState<ListPage, ListController> {
           );
         }
 
-        return ListView.builder(
-            controller: controller.scrollController,
-            itemCount: pokemons.length,
-            itemBuilder: (context, index) {
-              return PokecardWidget(
-                pokemon: pokemons[index],
-              );
-            });
+        return GridView.builder(
+          controller: controller.scrollController,
+          itemCount: pokemons.length,
+          itemBuilder: (context, index) {
+            return PokecardWidget(
+              pokemon: pokemons[index],
+            );
+          },
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        );
       }),
     );
   }

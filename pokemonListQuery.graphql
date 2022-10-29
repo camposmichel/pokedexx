@@ -1,0 +1,31 @@
+query pokemonListQuery {
+  pokemons: pokemon_v2_pokemon(offset: 0, limit: 6, order_by: {id: asc}) {
+    id
+    name
+    height
+    is_default
+    base_experience
+    sprites: pokemon_v2_pokemonsprites {
+      id
+    }
+    types: pokemon_v2_pokemontypes {
+      type: pokemon_v2_type {
+        id
+        name
+      }
+      slot
+    }
+  }
+  species: pokemon_v2_pokemonspecies(offset: 0, limit: 6, order_by: {id: asc}) {
+    id
+    evolutionchain: pokemon_v2_evolutionchain {
+      id
+      pokemonspecies: pokemon_v2_pokemonspecies {
+        name
+        id
+        order
+        pokemon_color_id
+      }
+    }
+  }
+}

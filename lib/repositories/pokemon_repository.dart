@@ -12,15 +12,12 @@ class PokemonRepository {
   Future<List<PokemonMapped>> getPokemonList(int page) async {
     const String query = r'''
           query getPokemons($offset: Int!) {
-            pokemons: pokemon_v2_pokemon(offset: $offset, limit: 6, order_by: {id: asc}) {
+            pokemons: pokemon_v2_pokemon(offset: $offset, limit: 10, order_by: {id: asc}) {
               id
               name
               height
               is_default
               base_experience
-              sprites: pokemon_v2_pokemonsprites {
-                id
-              }
               types: pokemon_v2_pokemontypes {
                 type: pokemon_v2_type {
                   id
@@ -29,7 +26,7 @@ class PokemonRepository {
                 slot
               }
             }
-            species: pokemon_v2_pokemonspecies(offset: $offset, limit: 6, order_by: {id: asc}) {
+            species: pokemon_v2_pokemonspecies(offset: $offset, limit: 10, order_by: {id: asc}) {
               id
               evolutionchain: pokemon_v2_evolutionchain {
                 id

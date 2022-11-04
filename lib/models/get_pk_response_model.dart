@@ -144,12 +144,14 @@ class Types {
 class Type {
   int? id;
   String? name;
+  String? icon;
 
   Type({this.id, this.name});
 
   Type.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    icon = 'https://pokedex-react-mui.netlify.app/${json['name']}.png';
   }
 
   Map<String, dynamic> toJson() {

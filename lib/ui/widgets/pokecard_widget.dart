@@ -5,46 +5,62 @@ import 'package:pokedexx/ui/theme.dart';
 
 class PokeCardWidget extends StatelessWidget {
   final PokemonMapped pokemon;
-  const PokeCardWidget({super.key, required this.pokemon});
+  late final List<Color> typesColors = [];
+
+  PokeCardWidget({super.key, required this.pokemon}) {
+    pokemon.types?.forEach((element) {
+      typesColors.add(AppTheme.getPkColorByType(element.type!.name!));
+    });
+    if (typesColors.length == 1) {
+      typesColors.add(typesColors.first);
+    }
+  }
 
   _handleTypes(BuildContext context) => SizedBox(
         width: MediaQuery.of(context).size.width - 180,
-        height: 22,
+        height: 18,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemCount: pokemon.types!.length,
           itemBuilder: (_, index) {
             final typeSlot = pokemon.types![index];
-
             return Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2,
-                horizontal: 8,
-              ),
-              margin: const EdgeInsets.only(right: 2),
-              decoration: BoxDecoration(
-                color: AppTheme.getPkColorByType(typeSlot.type!.name ?? ''),
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-              ),
-              child: Text(
-                typeSlot.type!.name ?? '',
-                style: const TextStyle(
-                  letterSpacing: 1.8,
-                ),
+              margin: const EdgeInsets.only(right: 8),
+              child: Image.network(
+                typeSlot.type!.icon!,
+                color: AppTheme.getPkColorByType(typeSlot.type!.name!),
               ),
             );
           },
         ),
       );
 
-  _handleInfoContainer(BuildContext context) => Container(
-        width: MediaQuery.of(context).size.width - 120,
-        height: 80,
-        padding: const EdgeInsets.only(left: 32),
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(199, 243, 243, 243),
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+  _handleInfoContainer(BuildContext context) {
+    double contentWidth = 120;
+    double contentHeight = 80;
+    double contentBorder = 6;
+    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(8));
+
+    return Container(
+      width: MediaQuery.of(context).size.width - contentWidth + contentBorder,
+      height: contentHeight + contentBorder,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: typesColors,
+        ),
+        borderRadius: borderRadius,
+      ),
+      child: Container(
+        width: MediaQuery.of(context).size.width - contentWidth,
+        height: contentHeight,
+        padding: const EdgeInsets.only(left: 24),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(199, 243, 243, 243),
+          borderRadius: borderRadius,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +76,9 @@ class PokeCardWidget extends StatelessWidget {
             _handleTypes(context),
           ],
         ),
-      );
+      ),
+    );
+  }
 
   _handleImage() => Align(
         alignment: Alignment.bottomRight,
@@ -76,10 +94,10 @@ class PokeCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 140,
+    return SizedBox(
+      height: 120,
       // margin: const EdgeInsets.only(bottom: 8),
-      // color: Colors.black12,
+      // // color: Colors.black12,
       // decoration: const BoxDecoration(
       //   color: Colors.blueGrey,
       //   borderRadius: BorderRadius.all(Radius.circular(18)),
@@ -89,14 +107,6 @@ class PokeCardWidget extends StatelessWidget {
         children: [
           _handleInfoContainer(context),
           _handleImage(),
-          // Align(
-          //   alignment: Alignment.centerRight,
-          //   child: FadeInImage.memoryNetwork(
-          //     placeholder: kTransparentImage,
-          //     image: pokemon.sprites.first
-          //         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png',
-          //   ),
-          // ),
         ],
       ),
     );

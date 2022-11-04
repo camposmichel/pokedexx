@@ -66,7 +66,7 @@ class PokeCardWidget extends StatelessWidget {
         alignment: Alignment.bottomRight,
         child: SvgPicture.network(
           pokemon.image1 ?? '',
-          height: 120,
+          height: 108,
           placeholderBuilder: (BuildContext context) => Container(
             padding: const EdgeInsets.all(30.0),
             child: const CircularProgressIndicator(),

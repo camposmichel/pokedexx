@@ -10,13 +10,18 @@ class PokemonsCubit extends Cubit<PokemonsState> {
 
   PokemonsCubit({
     required this.repository,
-  }) : super(const PokemonsState(pokemons: []));
+  }) : super(const PokemonsState(
+          pokemons: [],
+          page: 0,
+        ));
 
   getPokemonList() async {
     try {
-      final response = await repository.getPokemonList();
-      print(response);
-      emit(state.copyWith(pokemons: response));
+      final listReponse = await repository.getPokemonList(state.page);
+      emit(state.copyWith(
+        pokemons: List.from(state.pokemons)..addAll(listReponse),
+        page: state.page + 1,
+      ));
     } catch (e) {
       print(e);
     }

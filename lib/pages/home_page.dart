@@ -11,15 +11,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     context.read<PokemonsCubit>().getPokemonList();
+    _buildScrollListener();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  _buildScrollListener() {
+    scrollController.addListener(() {
+      if (scrollController.offset >=
+              scrollController.position.maxScrollExtent &&
+          !scrollController.position.outOfRange) {
+        context.read<PokemonsCubit>().getPokemonList();
+        // ClinicResponse? response = context.read<ClinicsCubit>().state.response;
+        // if (response != null &&
+        //     response.totalElements! > response.data!.length) {
+        //   final page = response.pageNumber! + 1;
+        //   context.read<ClinicsCubit>().loadList(page: page);
+        // }
+      }
+    });
   }
 
   AppBar _handleAppBar() => AppBar(
@@ -57,6 +76,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, state) {
               if (state.pokemons.isNotEmpty) {
                 return ListView.builder(
+                  controller: scrollController,
                   itemCount: state.pokemons.length,
                   itemBuilder: (BuildContext _, int index) => PokeCardWidget(
                     pokemon: state.pokemons[index],

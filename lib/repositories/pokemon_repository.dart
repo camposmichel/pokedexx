@@ -9,10 +9,10 @@ class PokemonRepository {
     required this.service,
   });
 
-  Future<List<PokemonMapped>> getPokemonList() async {
+  Future<List<PokemonMapped>> getPokemonList(int page) async {
     const String query = r'''
-          query {
-            pokemons: pokemon_v2_pokemon(offset: 0, limit: 6, order_by: {id: asc}) {
+          query getPokemons($offset: Int!) {
+            pokemons: pokemon_v2_pokemon(offset: $offset, limit: 6, order_by: {id: asc}) {
               id
               name
               height
@@ -29,7 +29,7 @@ class PokemonRepository {
                 slot
               }
             }
-            species: pokemon_v2_pokemonspecies(offset: 0, limit: 6, order_by: {id: asc}) {
+            species: pokemon_v2_pokemonspecies(offset: $offset, limit: 6, order_by: {id: asc}) {
               id
               evolutionchain: pokemon_v2_evolutionchain {
                 id
@@ -43,7 +43,7 @@ class PokemonRepository {
             }
           }
         ''';
-    const Map<String, dynamic> variables = {};
+    final variables = <String, dynamic>{'offset': page * 6};
     final response = await service.performQuery(query, variables: variables);
     final responseModel = GetPokemonResponseModel.fromJson(response.data!);
 

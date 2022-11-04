@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pokedexx/ui/theme.dart';
-import 'package:transparent_image/transparent_image.dart';
+import 'package:pokedexx/cubits/pokemons/pokemons_cubit.dart';
+import 'package:pokedexx/ui/widgets/pokecard_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +11,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<PokemonsCubit>().getPokemonList();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   AppBar _handleAppBar() => AppBar(
         centerTitle: true,
         title: const Text(
@@ -41,88 +53,24 @@ class _HomePageState extends State<HomePage> {
               topRight: Radius.circular(18),
             ),
           ),
-          child: ListView.builder(
-            itemCount: 20,
-            itemBuilder: _handlePokecard,
+          child: BlocBuilder<PokemonsCubit, PokemonsState>(
+            builder: (context, state) {
+              if (state.pokemons.isNotEmpty) {
+                return ListView.builder(
+                  itemCount: state.pokemons.length,
+                  itemBuilder: (BuildContext _, int index) => PokeCardWidget(
+                    pokemon: state.pokemons[index],
+                  ),
+                );
+              }
+
+              return const Center(
+                child: Text('Aguarde...'),
+              );
+            },
           ),
         ),
       );
-
-  Widget _handlePokecard(BuildContext _, int index) {
-    return Container(
-      height: 140,
-      // margin: const EdgeInsets.only(bottom: 8),
-      // color: Colors.black12,
-      // decoration: const BoxDecoration(
-      //   color: Colors.blueGrey,
-      //   borderRadius: BorderRadius.all(Radius.circular(18)),
-      // ),
-      child: Stack(
-        alignment: AlignmentDirectional.bottomStart,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width - 120,
-            height: 80,
-            padding: const EdgeInsets.only(left: 32),
-            decoration: const BoxDecoration(
-              // color: AppTheme.pkFireColor,
-              color: Color.fromARGB(199, 243, 243, 243),
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Charmander',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 2,
-                        horizontal: 8,
-                      ),
-                      margin: EdgeInsets.only(right: 2),
-                      decoration: BoxDecoration(
-                        color: AppTheme.pkFireColor,
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                      ),
-                      child: Text(
-                        'Fire',
-                        style: TextStyle(
-                          letterSpacing: 1.8,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image:
-                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png',
-            ),
-            // child: FadeInImage.assetNetwork(
-            //   placeholder: 'assets/images/pokemongo.gif',
-            //   image:
-            //       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png',
-            // ),
-            // child: Image.network(
-            //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png'),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

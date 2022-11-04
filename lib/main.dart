@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedexx/cubits/providers.dart';
 import 'package:pokedexx/routes.dart';
 
 void main() {
@@ -10,13 +12,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
+    return MultiBlocProvider(
+      providers: CubitProviders.providers,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+        ),
+        routes: Routes.routes,
+        initialRoute: Routes.home,
       ),
-      routes: Routes.routes,
-      initialRoute: Routes.home,
     );
   }
 }

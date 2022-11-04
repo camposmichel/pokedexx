@@ -10,9 +10,10 @@ class PokemonRepository {
   });
 
   Future<List<PokemonMapped>> getPokemonList(int page) async {
+    const double limit = 10;
     const String query = r'''
-          query getPokemons($offset: Int!) {
-            pokemons: pokemon_v2_pokemon(offset: $offset, limit: 10, order_by: {id: asc}) {
+          query getPokemons($offset: Int!, $limit: Int!) {
+            pokemons: pokemon_v2_pokemon(offset: $offset, limit: $limit, order_by: {id: asc}) {
               id
               name
               height
@@ -26,7 +27,7 @@ class PokemonRepository {
                 slot
               }
             }
-            species: pokemon_v2_pokemonspecies(offset: $offset, limit: 10, order_by: {id: asc}) {
+            species: pokemon_v2_pokemonspecies(offset: $offset, limit: $limit, order_by: {id: asc}) {
               id
               evolutionchain: pokemon_v2_evolutionchain {
                 id
@@ -40,7 +41,7 @@ class PokemonRepository {
             }
           }
         ''';
-    final variables = <String, dynamic>{'offset': page * 6};
+    final variables = <String, dynamic>{'offset': page * limit, 'limit': limit};
     final response = await service.performQuery(query, variables: variables);
     final responseModel = GetPokemonResponseModel.fromJson(response.data!);
 

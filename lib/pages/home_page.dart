@@ -31,12 +31,6 @@ class _HomePageState extends State<HomePage> {
               scrollController.position.maxScrollExtent &&
           !scrollController.position.outOfRange) {
         context.read<PokemonsCubit>().getPokemonList();
-        // ClinicResponse? response = context.read<ClinicsCubit>().state.response;
-        // if (response != null &&
-        //     response.totalElements! > response.data!.length) {
-        //   final page = response.pageNumber! + 1;
-        //   context.read<ClinicsCubit>().loadList(page: page);
-        // }
       }
     });
   }

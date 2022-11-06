@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: CubitProviders.providers,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Pokedexx',
         theme: ThemeData(
           primarySwatch: Colors.red,
         ),

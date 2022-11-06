@@ -1,20 +1,4 @@
-// class GetPokemonResponseModel {
-//   Data? data;
-
-//   GetPokemonResponseModel({this.data});
-
-//   GetPokemonResponseModel.fromJson(Map<String, dynamic> json) {
-//     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     if (this.data != null) {
-//       data['data'] = this.data!.toJson();
-//     }
-//     return data;
-//   }
-// }
+import 'package:pokedexx/models/pokemon_mapped_model.dart';
 
 class GetPokemonResponseModel {
   List<Pokemons>? pokemons;
@@ -215,24 +199,32 @@ class Evolutionchain {
 class Pokemonspecies {
   String? name;
   int? id;
-  int? order;
-  int? pokemonColorId;
+  List<Pokemons>? infos;
+  PokemonMapped? pokeInfo;
 
-  Pokemonspecies({this.name, this.id, this.order, this.pokemonColorId});
+  Pokemonspecies({this.name, this.id, this.infos, this.pokeInfo});
 
   Pokemonspecies.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     id = json['id'];
-    order = json['order'];
-    pokemonColorId = json['pokemon_color_id'];
+    if (json['infos'] != null) {
+      infos = <Pokemons>[];
+      json['infos'].forEach((v) {
+        infos!.add(new Pokemons.fromJson(v));
+      });
+      if (json['infos'].first != null) {
+        pokeInfo = PokemonMapped.fromJson(json['infos'].first);
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['id'] = this.id;
-    data['order'] = this.order;
-    data['pokemon_color_id'] = this.pokemonColorId;
+    if (this.infos != null) {
+      data['infos'] = this.infos!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

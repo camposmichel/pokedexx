@@ -77,9 +77,6 @@ class PokemonMapped {
     data['height'] = this.height;
     data['is_default'] = this.isDefault;
     data['base_experience'] = this.baseExperience;
-    // if (this.sprites != null) {
-    //   data['sprites'] = this.sprites!.map((v) => v.toJson()).toList();
-    // }
     if (this.types != null) {
       data['types'] = this.types!.map((v) => v.toJson()).toList();
     }

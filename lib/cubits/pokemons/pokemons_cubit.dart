@@ -26,4 +26,7 @@ class PokemonsCubit extends Cubit<PokemonsState> {
       print(e);
     }
   }
+
+  void selectPokemon(PokemonMapped pokemon) =>
+      emit(state.copyWith(pokemonSelected: pokemon));
 }

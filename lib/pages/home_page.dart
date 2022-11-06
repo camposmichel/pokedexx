@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedexx/cubits/pokemons/pokemons_cubit.dart';
+import 'package:pokedexx/routes.dart';
 import 'package:pokedexx/ui/widgets/pokecard_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -74,6 +75,12 @@ class _HomePageState extends State<HomePage> {
                   itemCount: state.pokemons.length,
                   itemBuilder: (BuildContext _, int index) => PokeCardWidget(
                     pokemon: state.pokemons[index],
+                    onTap: () {
+                      context
+                          .read<PokemonsCubit>()
+                          .selectPokemon(state.pokemons[index]);
+                      Navigator.pushNamed(context, Routes.detail);
+                    },
                   ),
                 );
               }

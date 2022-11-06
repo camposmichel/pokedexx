@@ -5,9 +5,15 @@ import 'package:pokedexx/ui/theme.dart';
 
 class PokeCardWidget extends StatelessWidget {
   final PokemonMapped pokemon;
+  final Function()? onTap;
+
   late final List<Color> typesColors = [];
 
-  PokeCardWidget({super.key, required this.pokemon}) {
+  PokeCardWidget({
+    super.key,
+    required this.pokemon,
+    this.onTap,
+  }) {
     pokemon.types?.forEach((element) {
       typesColors.add(AppTheme.getPkColorByType(element.type!.name!));
     });
@@ -94,20 +100,17 @@ class PokeCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      // margin: const EdgeInsets.only(bottom: 8),
-      // // color: Colors.black12,
-      // decoration: const BoxDecoration(
-      //   color: Colors.blueGrey,
-      //   borderRadius: BorderRadius.all(Radius.circular(18)),
-      // ),
-      child: Stack(
-        alignment: AlignmentDirectional.bottomStart,
-        children: [
-          _handleInfoContainer(context),
-          _handleImage(),
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        height: 120,
+        child: Stack(
+          alignment: AlignmentDirectional.bottomStart,
+          children: [
+            _handleInfoContainer(context),
+            _handleImage(),
+          ],
+        ),
       ),
     );
   }

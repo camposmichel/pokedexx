@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
           primarySwatch: Colors.red,
         ),
         routes: Routes.routes,
-        initialRoute: Routes.home,
+        initialRoute: Routes.splash,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedexx/pages/home_page.dart';
+import 'package:pokedexx/pages/splash_page.dart';
 
 class Routes {
   Routes._();
@@ -8,7 +9,7 @@ class Routes {
   static const String splash = '/splash';
 
   static final routes = <String, WidgetBuilder>{
-    // splash: (context) => const MainContainer(),
+    splash: (context) => const SplashPage(),
     home: (context) => const HomePage(),
   };
 }

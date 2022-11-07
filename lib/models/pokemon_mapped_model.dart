@@ -35,7 +35,7 @@ class PokemonMapped {
     image1 =
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${json['id']}.svg';
     image2 =
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${json['id']}.png';
+        'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${json['id']}.png';
     image3 =
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${json['id']}.gif';
     if (json['types'] != null) {
@@ -62,7 +62,7 @@ class PokemonMapped {
       image1:
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${model.id}.svg',
       image2:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${model.id}.png',
+          'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${model.id}.png',
       image3:
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${model.id}.gif',
       types: model.types,

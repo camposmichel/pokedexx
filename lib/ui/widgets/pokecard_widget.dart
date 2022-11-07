@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pokedexx/models/pokemon_mapped_model.dart';
 import 'package:pokedexx/ui/theme.dart';
+import 'package:pokedexx/ui/widgets/pokeimage_widget.dart';
 
 class PokeCardWidget extends StatelessWidget {
   final PokemonMapped pokemon;
@@ -76,21 +76,6 @@ class PokeCardWidget extends StatelessWidget {
     );
   }
 
-  _handleImage() => Align(
-        alignment: Alignment.bottomRight,
-        child: Hero(
-          tag: pokemon.name!,
-          child: SvgPicture.network(
-            pokemon.image1 ?? '',
-            height: 108,
-            placeholderBuilder: (BuildContext context) => Container(
-              padding: const EdgeInsets.all(30.0),
-              child: const CircularProgressIndicator(),
-            ),
-          ),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -101,7 +86,10 @@ class PokeCardWidget extends StatelessWidget {
           alignment: AlignmentDirectional.bottomStart,
           children: [
             _handleInfoContainer(context),
-            _handleImage(),
+            PokeImageWidget(
+              pokemon: pokemon,
+              height: 108,
+            ),
           ],
         ),
       ),

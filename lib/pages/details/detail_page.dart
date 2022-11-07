@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedexx/cubits/pokemons/pokemons_cubit.dart';
 import 'package:pokedexx/models/pokemon_mapped_model.dart';
 import 'package:pokedexx/pages/details/cubit/pokemon_details_cubit.dart';
 import 'package:pokedexx/ui/theme.dart';
+import 'package:pokedexx/ui/widgets/pokeimage_widget.dart';
 
 import '../../models/get_pk_response_model.dart';
 
@@ -24,18 +24,6 @@ class _DetailPageState extends State<DetailPage> {
     elevation: 0,
   );
 
-  Widget _handleImage(PokemonMapped pokemon) => Hero(
-        tag: pokemon.name!,
-        child: SvgPicture.network(
-          pokemon.image1 ?? '',
-          height: 108 * 2,
-          placeholderBuilder: (BuildContext _) => Container(
-            padding: const EdgeInsets.all(30.0),
-            child: const CircularProgressIndicator(),
-          ),
-        ),
-      );
-
   Widget _handleCarrouselImage(PokemonMapped pokemon) {
     List<Pokemonspecies> pokemonSpecies =
         pokemon.evolutionchain!.pokemonspecies ?? [];
@@ -52,7 +40,10 @@ class _DetailPageState extends State<DetailPage> {
         },
         itemBuilder: (_, index) => AnimatedBuilder(
           animation: _pageController,
-          builder: (_, child) => _handleImage(pokemonSpecies[index].pokeInfo!),
+          builder: (_, child) => PokeImageWidget(
+            pokemon: pokemonSpecies[index].pokeInfo!,
+            height: 108 * 2,
+          ),
         ),
       ),
     );

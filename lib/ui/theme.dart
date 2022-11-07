@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedexx/models/pokemon_mapped_model.dart';
 
 class AppTheme {
   AppTheme._();
@@ -70,5 +71,18 @@ class AppTheme {
       default:
         return pkNormalColor;
     }
+  }
+
+  static List<Color> getTypesColors(PokemonMapped pokemon) {
+    final List<Color> typesColors = [];
+
+    pokemon.types?.forEach((element) {
+      typesColors.add(AppTheme.getPkColorByType(element.type!.name!));
+    });
+    if (typesColors.length == 1) {
+      typesColors.add(typesColors.first);
+    }
+
+    return typesColors;
   }
 }

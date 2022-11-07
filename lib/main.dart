@@ -18,9 +18,10 @@ class MainApp extends StatelessWidget {
         title: 'Pokedexx',
         theme: ThemeData(
           primarySwatch: Colors.red,
+          canvasColor: Colors.transparent,
         ),
         routes: Routes.routes,
-        initialRoute: Routes.splash,
+        initialRoute: Routes.home,
       ),
     );
   }

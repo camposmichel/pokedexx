@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedexx/cubits/pokemons/pokemons_cubit.dart';
 import 'package:pokedexx/models/pokemon_mapped_model.dart';
-import 'package:pokedexx/pages/details/cubit/pokemon_details_cubit.dart';
+import 'package:pokedexx/pages/details/cubit/details_page_cubit.dart';
 import 'package:pokedexx/ui/theme.dart';
 import 'package:pokedexx/ui/widgets/pokeimage_widget.dart';
 
@@ -35,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
         controller: _pageController,
         onPageChanged: (int value) {
           context
-              .read<PokemonDetailsCubit>()
+              .read<DetailsPageCubit>()
               .fetchViewPage(value, pokemonSpecies[value].pokeInfo!);
         },
         itemBuilder: (_, index) => AnimatedBuilder(
@@ -50,13 +50,13 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Widget _handleContentBody(PokemonMapped pokemon) {
-    context.read<PokemonDetailsCubit>().fetchPokemonSpecies(
+    context.read<DetailsPageCubit>().fetchPokemonSpecies(
           pokemonOnFocus: pokemon,
           pokemonSpecies: pokemon.evolutionchain!.pokemonspecies!,
           currentPageView: pokemon.evolutionchain!.pokemonspecies!
               .indexWhere((element) => element.id == pokemon.id),
         );
-    return BlocBuilder<PokemonDetailsCubit, PokemonDetailsState>(
+    return BlocBuilder<DetailsPageCubit, DetailsPageState>(
       builder: (_, state) {
         final pokemonOnFocus = state.pokemonOnFocus ?? pokemon;
         _pageController = PageController(

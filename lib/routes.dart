@@ -4,7 +4,7 @@ import 'package:pokedexx/pages/details/detail_page.dart';
 import 'package:pokedexx/pages/home_page.dart';
 import 'package:pokedexx/pages/splash_page.dart';
 
-import 'pages/details/cubit/pokemon_details_cubit.dart';
+import 'pages/details/cubit/details_page_cubit.dart';
 
 class Routes {
   Routes._();
@@ -17,7 +17,7 @@ class Routes {
     splash: (context) => const SplashPage(),
     home: (context) => const HomePage(),
     detail: (context) => BlocProvider(
-          create: (_) => PokemonDetailsCubit(),
+          create: (_) => DetailsPageCubit(),
           child: const DetailPage(),
         ),
   };

@@ -3,10 +3,10 @@ import 'package:meta/meta.dart';
 import 'package:pokedexx/models/get_pk_response_model.dart';
 import 'package:pokedexx/models/pokemon_mapped_model.dart';
 
-part 'pokemon_details_state.dart';
+part 'details_page_state.dart';
 
-class PokemonDetailsCubit extends Cubit<PokemonDetailsState> {
-  PokemonDetailsCubit() : super(const PokemonDetailsState());
+class DetailsPageCubit extends Cubit<DetailsPageState> {
+  DetailsPageCubit() : super(const DetailsPageState());
 
   void fetchPokemonSpecies({
     required int currentPageView,

@@ -1,23 +1,23 @@
-part of 'pokemon_details_cubit.dart';
+part of 'details_page_cubit.dart';
 
 @immutable
-class PokemonDetailsState {
+class DetailsPageState {
   final int currentPageView;
   final List<Pokemonspecies> pokemonSpecies;
   final PokemonMapped? pokemonOnFocus;
 
-  const PokemonDetailsState({
+  const DetailsPageState({
     this.currentPageView = 0,
     this.pokemonSpecies = const [],
     this.pokemonOnFocus,
   });
 
-  PokemonDetailsState copyWith({
+  DetailsPageState copyWith({
     int? currentPageView,
     List<Pokemonspecies>? pokemonSpecies,
     PokemonMapped? pokemonOnFocus,
   }) {
-    return PokemonDetailsState(
+    return DetailsPageState(
       currentPageView: currentPageView ?? this.currentPageView,
       pokemonSpecies: pokemonSpecies ?? this.pokemonSpecies,
       pokemonOnFocus: pokemonOnFocus ?? this.pokemonOnFocus,

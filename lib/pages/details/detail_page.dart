@@ -28,7 +28,7 @@ class _DetailPageState extends State<DetailPage> {
     List<Pokemonspecies> pokemonSpecies =
         pokemon.evolutionchain!.pokemonspecies ?? [];
     return AspectRatio(
-      aspectRatio: 1.4,
+      aspectRatio: 1,
       child: PageView.builder(
         itemCount: pokemonSpecies.length,
         physics: const ClampingScrollPhysics(),
@@ -42,7 +42,7 @@ class _DetailPageState extends State<DetailPage> {
           animation: _pageController,
           builder: (_, child) => PokeImageWidget(
             pokemon: pokemonSpecies[index].pokeInfo!,
-            height: 108 * 2,
+            height: 108 * 3,
           ),
         ),
       ),
@@ -85,7 +85,7 @@ class _DetailPageState extends State<DetailPage> {
             children: [
               Center(child: _handleCarrouselImage(pokemon)),
               Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 4,
                 decoration: const BoxDecoration(
                   color: Colors.white24,
                   borderRadius: BorderRadius.all(Radius.circular(16)),

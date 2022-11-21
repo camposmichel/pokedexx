@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedexx/models/pokemon_mapped_model.dart';
 import 'package:pokedexx/ui/theme.dart';
 import 'package:pokedexx/ui/widgets/pokeimage_widget.dart';
+import 'package:pokedexx/ui/widgets/poketypes_widget.dart';
 
 class PokeCardWidget extends StatelessWidget {
   final PokemonMapped pokemon;
@@ -11,26 +12,6 @@ class PokeCardWidget extends StatelessWidget {
     required this.pokemon,
     this.onTap,
   });
-
-  _handleTypes(BuildContext context) => SizedBox(
-        width: MediaQuery.of(context).size.width - 180,
-        height: 18,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: pokemon.types!.length,
-          itemBuilder: (_, index) {
-            final typeSlot = pokemon.types![index];
-            return Container(
-              margin: const EdgeInsets.only(right: 8),
-              child: Image.network(
-                typeSlot.type!.icon!,
-                color: AppTheme.getPkColorByType(typeSlot.type!.name!),
-              ),
-            );
-          },
-        ),
-      );
 
   _handleInfoContainer(BuildContext context) {
     double contentWidth = 120;
@@ -69,7 +50,7 @@ class PokeCardWidget extends StatelessWidget {
                 fontSize: 24,
               ),
             ),
-            _handleTypes(context),
+            PokeTypesWidget(types: pokemon.types ?? []),
           ],
         ),
       ),

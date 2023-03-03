@@ -10,24 +10,24 @@ class GetPokemonResponseModel {
     if (json['pokemons'] != null) {
       pokemons = <Pokemons>[];
       json['pokemons'].forEach((v) {
-        pokemons!.add(new Pokemons.fromJson(v));
+        pokemons!.add(Pokemons.fromJson(v));
       });
     }
     if (json['species'] != null) {
       species = <Species>[];
       json['species'].forEach((v) {
-        species!.add(new Species.fromJson(v));
+        species!.add(Species.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.pokemons != null) {
-      data['pokemons'] = this.pokemons!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (pokemons != null) {
+      data['pokemons'] = pokemons!.map((v) => v.toJson()).toList();
     }
-    if (this.species != null) {
-      data['species'] = this.species!.map((v) => v.toJson()).toList();
+    if (species != null) {
+      data['species'] = species!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -60,29 +60,29 @@ class Pokemons {
     if (json['sprites'] != null) {
       sprites = <Sprites>[];
       json['sprites'].forEach((v) {
-        sprites!.add(new Sprites.fromJson(v));
+        sprites!.add(Sprites.fromJson(v));
       });
     }
     if (json['types'] != null) {
       types = <Types>[];
       json['types'].forEach((v) {
-        types!.add(new Types.fromJson(v));
+        types!.add(Types.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['height'] = this.height;
-    data['is_default'] = this.isDefault;
-    data['base_experience'] = this.baseExperience;
-    if (this.sprites != null) {
-      data['sprites'] = this.sprites!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['height'] = height;
+    data['is_default'] = isDefault;
+    data['base_experience'] = baseExperience;
+    if (sprites != null) {
+      data['sprites'] = sprites!.map((v) => v.toJson()).toList();
     }
-    if (this.types != null) {
-      data['types'] = this.types!.map((v) => v.toJson()).toList();
+    if (types != null) {
+      data['types'] = types!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -98,8 +98,8 @@ class Sprites {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     return data;
   }
 }
@@ -111,16 +111,16 @@ class Types {
   Types({this.type, this.slot});
 
   Types.fromJson(Map<String, dynamic> json) {
-    type = json['type'] != null ? new Type.fromJson(json['type']) : null;
+    type = json['type'] != null ? Type.fromJson(json['type']) : null;
     slot = json['slot'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.type != null) {
-      data['type'] = this.type!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (type != null) {
+      data['type'] = type!.toJson();
     }
-    data['slot'] = this.slot;
+    data['slot'] = slot;
     return data;
   }
 }
@@ -139,9 +139,9 @@ class Type {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }
@@ -155,15 +155,15 @@ class Species {
   Species.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     evolutionchain = json['evolutionchain'] != null
-        ? new Evolutionchain.fromJson(json['evolutionchain'])
+        ? Evolutionchain.fromJson(json['evolutionchain'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.evolutionchain != null) {
-      data['evolutionchain'] = this.evolutionchain!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (evolutionchain != null) {
+      data['evolutionchain'] = evolutionchain!.toJson();
     }
     return data;
   }
@@ -180,17 +180,16 @@ class Evolutionchain {
     if (json['pokemonspecies'] != null) {
       pokemonspecies = <Pokemonspecies>[];
       json['pokemonspecies'].forEach((v) {
-        pokemonspecies!.add(new Pokemonspecies.fromJson(v));
+        pokemonspecies!.add(Pokemonspecies.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.pokemonspecies != null) {
-      data['pokemonspecies'] =
-          this.pokemonspecies!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (pokemonspecies != null) {
+      data['pokemonspecies'] = pokemonspecies!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -210,7 +209,7 @@ class Pokemonspecies {
     if (json['infos'] != null) {
       infos = <Pokemons>[];
       json['infos'].forEach((v) {
-        infos!.add(new Pokemons.fromJson(v));
+        infos!.add(Pokemons.fromJson(v));
       });
       if (json['infos'].first != null) {
         pokeInfo = PokemonMapped.fromJson(json['infos'].first);
@@ -219,11 +218,11 @@ class Pokemonspecies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['id'] = this.id;
-    if (this.infos != null) {
-      data['infos'] = this.infos!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['id'] = id;
+    if (infos != null) {
+      data['infos'] = infos!.map((v) => v.toJson()).toList();
     }
     return data;
   }

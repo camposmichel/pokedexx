@@ -41,11 +41,11 @@ class PokemonMapped {
     if (json['types'] != null) {
       types = <Types>[];
       json['types'].forEach((v) {
-        types!.add(new Types.fromJson(v));
+        types!.add(Types.fromJson(v));
       });
     }
     evolutionchain = json['evolutionchain'] != null
-        ? new Evolutionchain.fromJson(json['evolutionchain'])
+        ? Evolutionchain.fromJson(json['evolutionchain'])
         : null;
   }
 
@@ -71,17 +71,17 @@ class PokemonMapped {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['height'] = this.height;
-    data['is_default'] = this.isDefault;
-    data['base_experience'] = this.baseExperience;
-    if (this.types != null) {
-      data['types'] = this.types!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['height'] = height;
+    data['is_default'] = isDefault;
+    data['base_experience'] = baseExperience;
+    if (types != null) {
+      data['types'] = types!.map((v) => v.toJson()).toList();
     }
-    if (this.evolutionchain != null) {
-      data['evolutionchain'] = this.evolutionchain!.toJson();
+    if (evolutionchain != null) {
+      data['evolutionchain'] = evolutionchain!.toJson();
     }
     return data;
   }

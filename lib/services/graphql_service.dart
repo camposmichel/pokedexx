@@ -33,9 +33,6 @@ class GraphQLService {
     );
 
     final result = await _client.mutate(options);
-
-    print(result);
-
     return result;
   }
 }

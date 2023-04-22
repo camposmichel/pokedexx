@@ -4,13 +4,18 @@ import 'package:pokedexx/ui/theme.dart';
 
 class PokeTypesWidget extends StatelessWidget {
   final List<Types> types;
+  final Color? color;
 
-  const PokeTypesWidget({super.key, required this.types});
+  const PokeTypesWidget({
+    super.key,
+    required this.types,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 180,
+      // width: MediaQuery.of(context).size.width - 180,
       height: 18,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -22,7 +27,7 @@ class PokeTypesWidget extends StatelessWidget {
             margin: const EdgeInsets.only(right: 8),
             child: Image.network(
               typeSlot.type!.icon!,
-              color: AppTheme.getPkColorByType(typeSlot.type!.name!),
+              color: color ?? AppTheme.getPkColorByType(typeSlot.type!.name!),
             ),
           );
         },

@@ -7,6 +7,7 @@ class PokemonQueries {
               id
               name
               height
+              weight
               is_default
               base_experience
               types: pokemon_v2_pokemontypes {
@@ -21,7 +22,7 @@ class PokemonQueries {
               id
               evolutionchain: pokemon_v2_evolutionchain {
                 id
-                pokemonspecies: pokemon_v2_pokemonspecies {
+                pokemonspecies: pokemon_v2_pokemonspecies(order_by: {id: asc}) {
                   name
                   id
                   order
@@ -38,6 +39,7 @@ class PokemonQueries {
               id
               name
               height
+              weight
               is_default
               base_experience
               types: pokemon_v2_pokemontypes {
@@ -52,13 +54,14 @@ class PokemonQueries {
               id
               evolutionchain: pokemon_v2_evolutionchain {
                 id
-                pokemonspecies: pokemon_v2_pokemonspecies {
+                pokemonspecies: pokemon_v2_pokemonspecies(order_by: {id: asc}) {
                   name
                   id
                   infos: pokemon_v2_pokemons(limit: 1) {
                     id
                     name
                     height
+                    weight
                     is_default
                     base_experience
                     types: pokemon_v2_pokemontypes {
@@ -68,6 +71,9 @@ class PokemonQueries {
                       }
                       slot
                     }
+                  }
+                  flavorTexts: pokemon_v2_pokemonspeciesflavortexts(limit: 1, where: { language_id: { _eq: 9 } }) {
+                    flavor_text
                   }
                 }
               }

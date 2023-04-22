@@ -13,11 +13,13 @@ class DetailsPageCubit extends Cubit<DetailsPageState> {
     required List<Pokemonspecies> pokemonSpecies,
     required PokemonMapped pokemonOnFocus,
   }) {
-    emit(state.copyWith(
-      pokemonSpecies: pokemonSpecies,
-      pokemonOnFocus: pokemonOnFocus,
-      currentPageView: currentPageView,
-    ));
+    emit(
+      state.copyWith(
+        pokemonSpecies: pokemonSpecies,
+        pokemonOnFocus: pokemonOnFocus,
+        currentPageView: currentPageView,
+      ),
+    );
   }
 
   void fetchViewPage(

@@ -5,6 +5,7 @@ import 'package:pokedexx/models/pokemon_mapped_model.dart';
 import 'package:pokedexx/pages/details/cubit/details_page_cubit.dart';
 import 'package:pokedexx/ui/theme.dart';
 import 'package:pokedexx/ui/widgets/pokeimage_widget.dart';
+import 'package:pokedexx/ui/widgets/poketypes_widget.dart';
 
 import '../../models/get_pk_response_model.dart';
 
@@ -40,11 +41,96 @@ class _DetailPageState extends State<DetailPage> {
         },
         itemBuilder: (_, index) => AnimatedBuilder(
           animation: _pageController,
-          builder: (_, child) => PokeImageWidget(
-            pokemon: pokemonSpecies[index].pokeInfo!,
-            height: 108 * 3,
+          builder: (_, child) => Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 108 * 2,
+                height: 108 * 2,
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: Alignment.center,
+                    colors: <Color>[
+                      Colors.white.withOpacity(0.8),
+                      Colors.white.withOpacity(0.0),
+                    ],
+                  ),
+                ),
+              ),
+              PokeImageWidget(
+                pokemon: pokemonSpecies[index].pokeInfo!,
+                height: 108 * 3,
+                alignment: Alignment.center,
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _handlePokemonDetails(PokemonMapped pokemon) {
+    final containerHeight = MediaQuery.of(context).size.height / 4;
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: containerHeight,
+      decoration: const BoxDecoration(
+        color: Colors.white60,
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              PokeTypesWidget(
+                types: pokemon.types ?? [],
+                // color: Colors.black,
+              ),
+              Text(
+                pokemon.name ?? '',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+              Text(
+                _handlePokemonId(pokemon.id ?? 0),
+                style: const TextStyle(
+                  fontFamily: 'PokemonGb',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Text(
+                'Height: ${pokemon.height! / 10}m',
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 16),
+              Text(
+                'Weight: ${pokemon.weight! / 10}kg',
+                style: const TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+          const SizedBox(height: 32),
+          SizedBox(
+            height: containerHeight / 2.3,
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: Text(
+                _handleFlavorText(pokemon.flavorText),
+                style: const TextStyle(fontSize: 18),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -84,14 +170,7 @@ class _DetailPageState extends State<DetailPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Center(child: _handleCarrouselImage(pokemon)),
-              Container(
-                height: MediaQuery.of(context).size.height / 4,
-                decoration: const BoxDecoration(
-                  color: Colors.white24,
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                child: Center(child: Text(pokemonOnFocus.name!)),
-              ),
+              _handlePokemonDetails(pokemonOnFocus),
             ],
           ),
         );
@@ -100,6 +179,23 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Widget _handleLoading() => const Center(child: Text('Aguarde...'));
+
+  String _handlePokemonId(int id) {
+    if (id < 10) {
+      return '#00$id';
+    } else if (id < 100) {
+      return '#0$id';
+    } else {
+      return '#$id';
+    }
+  }
+
+  String _handleFlavorText(String? flavorText) {
+    final a = flavorText == null
+        ? ''
+        : flavorText.replaceAll('\n', ' ').replaceAll('', ' ');
+    return a;
+  }
 
   @override
   void dispose() {

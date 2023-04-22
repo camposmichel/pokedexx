@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     context.read<PokemonsCubit>().getPokemonList();
-    // _buildScrollListener();
+    _buildScrollListener();
   }
 
   @override

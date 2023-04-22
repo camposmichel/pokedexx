@@ -5,6 +5,7 @@ class PokemonMapped {
   int? id;
   String? name;
   int? height;
+  int? weight;
   bool? isDefault;
   int? baseExperience;
   // List<Sprites>? sprites;
@@ -12,24 +13,29 @@ class PokemonMapped {
   String? image2;
   String? image3;
   List<Types>? types;
+  String? flavorText;
   Evolutionchain? evolutionchain;
 
-  PokemonMapped(
-      {this.id,
-      this.name,
-      this.height,
-      this.isDefault,
-      this.baseExperience,
-      this.image1,
-      this.image2,
-      this.image3,
-      this.types,
-      this.evolutionchain});
+  PokemonMapped({
+    this.id,
+    this.name,
+    this.height,
+    this.weight,
+    this.isDefault,
+    this.baseExperience,
+    this.image1,
+    this.image2,
+    this.image3,
+    this.types,
+    this.flavorText,
+    this.evolutionchain,
+  });
 
   PokemonMapped.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = (json['name'] as String).capitalize();
     height = json['height'];
+    weight = json['weight'];
     isDefault = json['is_default'];
     baseExperience = json['base_experience'];
     image1 =
@@ -47,6 +53,7 @@ class PokemonMapped {
     evolutionchain = json['evolutionchain'] != null
         ? Evolutionchain.fromJson(json['evolutionchain'])
         : null;
+    flavorText = json['flavorText'];
   }
 
   factory PokemonMapped.responseModel({
@@ -57,6 +64,7 @@ class PokemonMapped {
       id: model.id,
       name: model.name!.capitalize(),
       height: model.height,
+      weight: model.weight,
       isDefault: model.isDefault,
       baseExperience: model.baseExperience,
       image1:
@@ -67,6 +75,11 @@ class PokemonMapped {
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${model.id}.gif',
       types: model.types,
       evolutionchain: species?.evolutionchain,
+      flavorText: species?.evolutionchain?.pokemonspecies
+          ?.firstWhere((element) => element.id == model.id)
+          .flavorTexts
+          ?.first
+          .flavorText,
     );
   }
 
@@ -75,6 +88,7 @@ class PokemonMapped {
     data['id'] = id;
     data['name'] = name;
     data['height'] = height;
+    data['weight'] = weight;
     data['is_default'] = isDefault;
     data['base_experience'] = baseExperience;
     if (types != null) {

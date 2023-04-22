@@ -5,11 +5,13 @@ import 'package:pokedexx/models/pokemon_mapped_model.dart';
 class PokeImageWidget extends StatelessWidget {
   final PokemonMapped pokemon;
   final double height;
+  final AlignmentGeometry alignment;
 
   const PokeImageWidget({
     super.key,
     required this.pokemon,
     required this.height,
+    this.alignment = Alignment.bottomRight,
   });
 
   @override
@@ -18,6 +20,7 @@ class PokeImageWidget extends StatelessWidget {
         ? Image.network(
             pokemon.image2 ?? '',
             height: height,
+            // cacheHeight: height.toInt(),
           )
         : SvgPicture.network(
             pokemon.image1 ?? '',
@@ -28,12 +31,12 @@ class PokeImageWidget extends StatelessWidget {
             ),
           );
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: alignment,
       child: Hero(
         tag: pokemon.name!,
         child: pokemon.id! > 905
-            ? Image.network(
-                'https://tr.rbxcdn.com/b803b11a5ecedb39bfe37edc8bbb7528/420/420/Image/Png',
+            ? Image.asset(
+                'assets/images/pokeball.png',
                 height: height,
               )
             : child,

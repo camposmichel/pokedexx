@@ -37,24 +37,28 @@ class Pokemons {
   int? id;
   String? name;
   int? height;
+  int? weight;
   bool? isDefault;
   int? baseExperience;
   List<Sprites>? sprites;
   List<Types>? types;
 
-  Pokemons(
-      {this.id,
-      this.name,
-      this.height,
-      this.isDefault,
-      this.baseExperience,
-      this.sprites,
-      this.types});
+  Pokemons({
+    this.id,
+    this.name,
+    this.height,
+    this.weight,
+    this.isDefault,
+    this.baseExperience,
+    this.sprites,
+    this.types,
+  });
 
   Pokemons.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     height = json['height'];
+    weight = json['weight'];
     isDefault = json['is_default'];
     baseExperience = json['base_experience'];
     if (json['sprites'] != null) {
@@ -76,6 +80,7 @@ class Pokemons {
     data['id'] = id;
     data['name'] = name;
     data['height'] = height;
+    data['weight'] = weight;
     data['is_default'] = isDefault;
     data['base_experience'] = baseExperience;
     if (sprites != null) {
@@ -199,6 +204,7 @@ class Pokemonspecies {
   String? name;
   int? id;
   List<Pokemons>? infos;
+  List<FlavorTexts>? flavorTexts;
   PokemonMapped? pokeInfo;
 
   Pokemonspecies({this.name, this.id, this.infos, this.pokeInfo});
@@ -212,8 +218,19 @@ class Pokemonspecies {
         infos!.add(Pokemons.fromJson(v));
       });
       if (json['infos'].first != null) {
-        pokeInfo = PokemonMapped.fromJson(json['infos'].first);
+        Map<String, dynamic> infosFirst = json['infos'].first;
+        infosFirst['flavorText'] = json['flavorTexts'].length > 0
+            ? json['flavorTexts'].first['flavor_text']
+            : '';
+        // infosFirst['flavorText'] = '';
+        pokeInfo = PokemonMapped.fromJson(infosFirst);
       }
+    }
+    if (json['flavorTexts'] != null) {
+      flavorTexts = <FlavorTexts>[];
+      json['flavorTexts'].forEach((v) {
+        flavorTexts!.add(FlavorTexts.fromJson(v));
+      });
     }
   }
 
@@ -224,6 +241,25 @@ class Pokemonspecies {
     if (infos != null) {
       data['infos'] = infos!.map((v) => v.toJson()).toList();
     }
+    if (flavorTexts != null) {
+      data['flavorTexts'] = flavorTexts!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class FlavorTexts {
+  String? flavorText;
+
+  FlavorTexts({this.flavorText});
+
+  FlavorTexts.fromJson(Map<String, dynamic> json) {
+    flavorText = json['flavor_text'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['flavor_text'] = flavorText;
     return data;
   }
 }

@@ -20,10 +20,12 @@ class PokemonRepository {
     final responseModel = GetPokemonResponseModel.fromJson(response.data!);
 
     final List<PokemonMapped> pokemonsMapped = responseModel.pokemons!
-        .map((model) => _handlePokemonsMapped(
-              model,
-              responseModel.species,
-            ))
+        .map(
+          (model) => _handlePokemonsMapped(
+            model,
+            responseModel.species,
+          ),
+        )
         .toList();
     return pokemonsMapped;
   }
